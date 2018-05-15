@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>components/Pages/Home/Home.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Desc.html">Desc</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Footer.html">Footer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Home.html">Home</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MainMenu.html">MainMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MainMenu.html#setLang">setLang</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NoMatch.html">NoMatch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Project.html">Project</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProjectViewer.html">ProjectViewer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Shortcut.html">Shortcut</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Support.html">Support</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Video.html">Video</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Videos.html">Videos</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Videos.html#getVideoThumb">getVideoThumb</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/Pages/Home/Home.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import Helmet from 'react-helmet';
+import { lang } from '../../../il8n/lang';
+import { connect } from 'react-redux';
+import { toggleInterstitial, setShortcutPosition, setProjectViewerPosition, setProject } from '../../../Actions/Index';
+import Video from '../../Video/Video';
+import Desc from '../../Desc/Desc';
+//import * as Scroll from 'react-scroll';
+import { Link, DirectLink, Element, Events, animateScroll as scroll } from 'react-scroll';
+import Carousel from 'nuka-carousel';
+import { CSSTransitionGroup } from 'react-transition-group';
+import _ from 'lodash';
+import './Home.css';
+
+import Shortcut from './Shortcut';
+import ProjectViewer from './ProjectViewer';
+
+/**
+ * Home
+ * @constructor
+ */
+
+class Home extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      ...props,
+      mouse: {
+        clientX: 0,
+        clientY: 0
+      },
+      project: {
+        videos: 'http://s3-us-west-1.amazonaws.com/ejs-portfolio/videos/test.mp4'
+      }
+    }
+    this.dispatchShortcutPosition = this.dispatchShortcutPosition.bind(this);
+    this.dispatchProjectViewerPosition = this.dispatchProjectViewerPosition.bind(this);
+    this.dispatchProject = this.dispatchProject.bind(this);
+  }
+  componentDidMount(){
+    this.throttledMouseMove = _.throttle(this.throttledMouseMove.bind(this), 50);
+  }
+  onMouseMove = (e) => {
+    e.persist();
+    this.throttledMouseMove(e);
+  }
+  throttledMouseMove = (e) => {
+    this.setState({
+      mouse: {
+        clientX: e.clientX,
+        clientY: e.clientY
+      }
+    });
+  }
+  dispatchShortcutPosition(pos,index){
+    this.props.dispatch(setShortcutPosition(pos,index));
+  }
+  dispatchProjectViewerPosition(pos){
+    this.props.dispatch(setProjectViewerPosition(pos));
+  }
+  dispatchProject(project){
+    this.props.dispatch(setProject(project));
+  }
+  render() {
+    const {shortcuts, projectViewer, project} = this.props;
+    return (
+      &lt;div className='wrap'>
+        &lt;Helmet title={ lang.home.title + lang.helmet.siteTitle } />
+
+
+
+
+        &lt;div className='desktop' onMouseMove={this.onMouseMove}>
+          {shortcuts.map((shortcut, index) => (
+            &lt;Shortcut
+              project={shortcut}
+              title={shortcut.title}
+              dispatchShortcutPosition={this.dispatchShortcutPosition}
+              dispatchProject={this.dispatchProject}
+              mouse={this.state.mouse}
+              index={index}
+              x={shortcut.position.x}
+              y={shortcut.position.y}
+              key={`shortcut-${index}`} />
+          ))}
+
+          &lt;ProjectViewer
+            project={project}
+            dispatchProjectViewerPosition={this.dispatchProjectViewerPosition}
+            mouse={this.state.mouse}
+            w={projectViewer.dim.w}
+            h={projectViewer.dim.h}
+            x={projectViewer.position.x}
+            y={projectViewer.position.y} />
+
+
+        &lt;/div>
+
+
+        {/*
+
+        &lt;Video vid={project.videos}/>
+
+
+        &lt;CSSTransitionGroup
+          transitionName='example'
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnter={false}
+          transitionLeave={false}>
+          &lt;Desc project={project}/>
+        &lt;/CSSTransitionGroup>
+
+
+
+
+
+
+        &lt;div className='site-content'>
+
+
+
+
+
+
+        {lang.home.projects.map((project_list, index) => (
+          &lt;div className='project'>
+            &lt;a style={{backgroundColor: project_list.color}} key={`project-${index}`} onClick={(e) => this.setProject(e, project_list)} className={project_list.videos === project.videos ? 'slidr-active slidr' : 'slidr'}>
+              &lt;h2>{project_list.title}&lt;/h2>
+
+              &lt;video width='400' loop>
+                &lt;source src={project_list.videos} type='video/mp4' />
+              &lt;/video>
+
+            &lt;/a>
+          &lt;/div>
+        ))}
+
+
+
+
+
+
+
+          &lt;Carousel
+            renderBottomCenterControls={false}
+            renderCenterLeftControls={({ previousSlide }) => (
+              &lt;button onClick={previousSlide}>Previous&lt;/button>
+            )}
+            renderCenterRightControls={({ nextSlide }) => (
+              &lt;button onClick={nextSlide}>Next&lt;/button>
+            )}
+            slidesToShow={5}>
+          {lang.home.projects.map((project_list, index) => (
+            &lt;div className='project'>
+              &lt;a style={{backgroundColor: project_list.color}} key={`project-${index}`} onClick={(e) => this.setProject(e, project_list)} className={project_list.videos === project.videos ? 'slidr-active slidr' : 'slidr'}>
+                &lt;h2>{project_list.title}&lt;/h2>
+
+                &lt;video width='400' loop>
+                  &lt;source src={project_list.videos} type='video/mp4' />
+                &lt;/video>
+
+              &lt;/a>
+            &lt;/div>
+          ))}
+          &lt;/Carousel>
+
+
+        &lt;/div>
+
+
+*/}
+
+
+
+
+      &lt;/div>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    lang: state.lang,
+    shortcuts: state.shortcuts,
+    projectViewer: state.projectViewer,
+    project: state.project
+  };
+}
+
+export default connect(mapStateToProps)(Home);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 14 2018 07:13:00 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

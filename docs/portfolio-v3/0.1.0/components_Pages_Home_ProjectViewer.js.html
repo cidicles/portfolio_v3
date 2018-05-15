@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>components/Pages/Home/ProjectViewer.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Desc.html">Desc</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Footer.html">Footer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Home.html">Home</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MainMenu.html">MainMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MainMenu.html#setLang">setLang</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NoMatch.html">NoMatch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Project.html">Project</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProjectViewer.html">ProjectViewer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Shortcut.html">Shortcut</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Support.html">Support</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Video.html">Video</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Videos.html">Videos</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Videos.html#getVideoThumb">getVideoThumb</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/Pages/Home/ProjectViewer.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import {cdnBase} from '../../../const';
+import Video from '../../Video/Video';
+import ReactTooltip from 'react-tooltip';
+import Typist from 'react-typist';
+
+/**
+ * ProjectViewer Component
+ * @constructor
+ * @prop {int} x - X Position.
+ * @prop {int} y - Y Position.
+ * @prop {object} mouse - Mouse Position.
+ */
+
+class ProjectViewer extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      ...props,
+      dragging: false,
+      offset: {
+        x: 0,
+        y: 0
+      }
+    }
+    this.startDrag = this.startDrag.bind(this);
+    this.endDrag = this.endDrag.bind(this);
+    this.clearDrag = this.clearDrag.bind(this);
+  }
+  componentDidMount(){
+    window.addEventListener('mouseup', this.clearDrag, false);
+    window.addEventListener('mouseleave', this.clearDrag, false);
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    //console.log(nextProps)
+    return true
+  }
+  clearDrag(){
+    this.setState({
+      dragging: false
+    });
+  }
+  startDrag(e){
+    const { x, y } = this.props;
+    const offset = {
+      x: e.clientX - x,
+      y: e.clientY - y
+    };
+    this.setState({
+      dragging: true,
+      offset
+    });
+  }
+  endDrag(){
+    const { dispatchProjectViewerPosition, mouse, index } = this.props;
+    const { offset } = this.state;
+    dispatchProjectViewerPosition(
+      {
+        x: mouse.clientX - offset.x,
+        y: mouse.clientY - offset.y
+      },
+      index
+    );
+    this.setState({
+      dragging: false
+    });
+  }
+  getStyle(){
+    const { x, y, w, h, mouse } = this.props;
+    const { dragging, offset } = this.state;
+    let style = {
+      left: dragging ? mouse.clientX - offset.x : x,
+      top: dragging ? mouse.clientY - offset.y : y,
+      width: w,
+      height: h
+    }
+    return style;
+  }
+  render() {
+    const style = this.getStyle();
+    const { title, project, w } = this.props;
+    return (
+      &lt;div style={style} className='project-viewer' onMouseDown={this.startDrag} onMouseUp={this.endDrag}>
+        &lt;div className='viewer-controls'>
+          &lt;h2>{project.title}&lt;/h2>
+          &lt;div className='btn'>
+            &lt;svg viewBox="0 0 24 24">&lt;path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>&lt;/svg>
+          &lt;/div>
+        &lt;/div>
+        &lt;Video vid={project.videos} w={w} />
+        &lt;div className='viewer-contents'>
+          &lt;h2>
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;&lt;/span>
+              h2
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+            {project.tagline}
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;/&lt;/span>
+              h2
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+          &lt;/h2>
+          &lt;p>
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;/&lt;/span>
+              p
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+
+
+            &lt;Typist avgTypingDelay={10} cursor={{hideWhenDone: true, hideWhenDoneDelay: 100}}>
+              {project.longdesc}
+            &lt;/Typist>
+
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;/&lt;/span>
+              p
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+          &lt;/p>
+          &lt;h3>
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;&lt;/span>
+              h3
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+
+            &lt;Typist avgTypingDelay={100} cursor={{hideWhenDone: true, hideWhenDoneDelay: 100}}>
+              Software / Languages
+            &lt;/Typist>
+
+
+
+            &lt;span className='tag'>
+              &lt;span>&amp;lt;/&lt;/span>
+              h3
+              &lt;span>&amp;gt;&lt;/span>
+            &lt;/span>
+          &lt;/h3>
+
+          &lt;div className='languages'>
+            &lt;ul>
+            {project.languages &amp;&amp; project.languages.map((language, index) => (
+              &lt;li key={`language-${index}`}>&lt;img src={`${cdnBase}logos/${language.toLowerCase().replace(' ','')}.png`} alt={language.toUpperCase()} data-tip={language.toUpperCase()} />&lt;/li>
+            ))}
+            &lt;/ul>
+          &lt;/div>
+        &lt;/div>
+        &lt;ReactTooltip />
+      &lt;/div>
+    );
+  }
+}
+
+export default ProjectViewer;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 14 2018 07:13:00 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

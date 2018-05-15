@@ -1,0 +1,219 @@
+@import '../../../vars'
+
+.wrap
+  //padding: 2rem
+
+.site-content
+  //top: 0
+  //left: 0
+  //bottom: 0
+  //position: fixed
+  //padding: 2rem
+  //position: fixed
+  //z-index: 2
+  //overflow-x: hidden
+  //width: 100vw
+  //overflow-y: visible
+  display: grid
+  grid-template-columns: 25% 25% 25% 25%
+  //display: flex
+  //border-top: 4px solid #fff
+
+.project
+  text-align: center
+  display: flex
+  align-items: center
+  justify-content: center
+  border-right: 1px solid #fff
+  margin: 0
+  display: block
+  color: #fff
+  text-decoration: none
+  border-bottom: 1px solid transparentize(#fff, 0.2)
+  transition: all 0.6s
+  cursor: pointer
+  position: relative
+  transform-origin: center center
+  .slidr
+    //opacity: 0.5
+    position: relative
+    display: block
+    height: 100%
+    //transform: translateX(-80vw)
+    transition: all 0.4s
+    &:hover
+      opacity: 1
+      //transform: translateY(-100px)
+      //transform: scale(1.2)
+      h2
+        opacity: 0
+      video
+        opacity: 1
+    h2
+      transition: all 0.4s
+      //transform: rotateZ(90deg)
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%,-50%)
+      width: 100%
+      transform-origin: 0 0
+      z-index: 1
+      font-size: 2.3rem
+      padding: 0
+      margin: 0
+      line-height: 2.2rem
+      letter-spacing: -0.3rem
+      font-weight: normal
+      font-family: $brand-font
+    video
+      transition: all 0.4s
+      //position: absolute
+      opacity: 0.2
+      top: 0
+      left: 0
+      z-index: 0
+      width: 100%
+
+.slidr-active
+  opacity: 1
+  //transform: translateY(-100px)
+  //margin-top: calc(100vh - 4rem)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.desktop
+  height: 100vh
+  width: 100vw
+  position: relative
+  background: #000
+
+.shortcut
+  width: 64px
+  height: 64px
+  background: #f00
+  position: absolute
+  top: 0
+  left: 0
+  cursor: pointer
+  user-drag: none
+  user-select: none
+  transition: top 0.1s, left 0.1s
+  .shortcut-contents
+    pointer-events: none
+
+.project-viewer
+  position: absolute
+  width: 50vw
+  height: 50vh
+  border-radius: 4px
+  top: 0
+  left: 0
+  //transition: top 0.1s, left 0.1s
+  background: #21252b
+  border: 1px solid #000
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15)
+
+.viewer-contents
+  padding: 1rem
+  overflow-y: scroll
+  height: 100%
+  text-align: left
+  background-color: #282c34
+  margin: 1rem
+  border-radius: 4px
+  h2
+    font-weight: 900
+    color: #d19a66
+    border-bottom: 1px solid #295283
+    margin-bottom: 0.5rem
+    padding-bottom: 0.5rem
+  h3
+    border-bottom: 1px solid #295283
+    margin-bottom: 0.5rem
+    padding-bottom: 0.5rem
+  p
+    color: #fff
+
+.viewer-controls
+  padding: 10px
+  border-bottom: 1px solid #000
+  h2
+    display: inline-block
+    padding: 0
+    margin: 0
+    font-family: $brand-font
+    font-size: 1.3rem
+    font-weight: normal
+
+.btn
+  float: right
+  box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75)
+  border-radius: 4px
+  padding: 5px
+  cursor: pointer
+  width: 24px
+  height: 24px
+  box-sizing: border-box
+  svg
+    width: 100%
+    path
+      fill: #fff
+  &:hover
+    background: #4d78cc
+    svg
+      path
+        fill: #000
+
+.languages
+  box-sizing: border-box
+  padding: 1rem
+  img
+    max-width: 68px
+  ul
+    list-style: none
+    margin: 0
+    padding: 0
+    display: inline
+    li
+      display: inline-block
+      padding: 0
+      margin: 0.3rem
+
+.tag
+  color: #fff
+  //transform-origin: center center
+  //transform: scale(0.7)
+  opacity: 0.2
+  display: block
+  span
+    &:first-child
+      color: #54b6c2
+    &:last-child
+      color: #54b6c2
