@@ -116,8 +116,8 @@
 
 .shortcut
   width: 64px
-  height: 64px
-  background: #f00
+  height: 128px
+  //background: #f00
   position: absolute
   top: 0
   left: 0
@@ -127,11 +127,48 @@
   transition: top 0.1s, left 0.1s
   .shortcut-contents
     pointer-events: none
+    text-align: center
+    font-size: 0.8rem
+    .shortcut-icon
+      width: 100%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Project Viewer
+.project-viewer-grid
+  display: grid
+  grid-template-columns: 1fr 1fr
 
 .project-viewer
   position: absolute
   width: 50vw
-  height: 50vh
   border-radius: 4px
   top: 0
   left: 0
@@ -141,12 +178,12 @@
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15)
 
 .viewer-contents
-  padding: 1rem
   overflow-y: scroll
   height: 100%
   text-align: left
   background-color: #282c34
-  margin: 1rem
+  padding: 1rem
+  box-sizing: border-box
   border-radius: 4px
   h2
     font-weight: 900
@@ -160,6 +197,8 @@
     padding-bottom: 0.5rem
   p
     color: #fff
+    margin: 0
+    padding: 0
 
 .viewer-controls
   padding: 10px
@@ -191,20 +230,21 @@
       path
         fill: #000
 
-.languages
+.viewer-toolbar
   box-sizing: border-box
-  padding: 1rem
-  img
-    max-width: 68px
+  border-right: 1px solid #181a1f
   ul
     list-style: none
     margin: 0
     padding: 0
     display: inline
     li
-      display: inline-block
-      padding: 0
-      margin: 0.3rem
+      display: block
+      padding: 0 0 0.25rem 0
+      border-bottom: 1px solid #181a1f
+      padding: 0.5rem
+      img
+        max-width: 42px
 
 .tag
   color: #fff

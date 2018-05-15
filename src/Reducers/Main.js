@@ -4,7 +4,8 @@ import _ from 'lodash';
 const getShortcuts = () => {
   let shortcuts = [];
   let width = 64;
-  let padding = 10;
+  let height = 128;
+  let padding = 20;
   let desktopW = window.innerWidth;
   let iconsPerRow = (desktopW / 2) / (width + padding);
   let chunkyShortcuts = _.chunk(lang.home.projects, iconsPerRow);
@@ -16,12 +17,21 @@ const getShortcuts = () => {
         ...chunkyShortcuts[i][j],
         position: {
           x: (width + padding) * j,
-          y: (width + padding) * i
+          y: (height + padding) * i
         }
       });
     }
   }
   return shortcuts;
+}
+
+const getViewerDimentions = () => {
+  let w = (window.innerWidth / 4) * 3;
+  let h = ((w / 16) * 9) + 85;
+  return ({
+    w,
+    h
+  });
 }
 
 const initialState = {
@@ -32,10 +42,7 @@ const initialState = {
       x: 100,
       y: 100
     },
-    dim: {
-      w: 600,
-      h: 600
-    }
+    dim: getViewerDimentions()
   },
   project: {
     videos: 'http://s3-us-west-1.amazonaws.com/ejs-portfolio/videos/test.mp4'

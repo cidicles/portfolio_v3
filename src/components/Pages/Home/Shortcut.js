@@ -81,6 +81,7 @@ class Shortcut extends Component {
     return (
       <div style={style} className='shortcut' onDoubleClick={this.updateProject.bind(this, project)} onMouseDown={this.startDrag} onMouseUp={this.endDrag}>
         <div className='shortcut-contents'>
+          <img src={project.logo} alt={project.title} className='shortcut-icon' />
           {project.title}
         </div>
       </div>
