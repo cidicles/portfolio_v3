@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Desc.html">Desc</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Footer.html">Footer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Home.html">Home</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MainMenu.html">MainMenu</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MainMenu.html#setLang">setLang</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NoMatch.html">NoMatch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Project.html">Project</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProjectViewer.html">ProjectViewer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Shortcut.html">Shortcut</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Support.html">Support</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Video.html">Video</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Videos.html">Videos</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Videos.html#getVideoThumb">getVideoThumb</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Home.html">Home</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NoMatch.html">NoMatch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Project.html">Project</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProjectViewer.html">ProjectViewer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Shortcut.html">Shortcut</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="StartMenu.html">StartMenu</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Video.html">Video</a></span></li>
 </nav>
 
 <div id="main">
@@ -43,16 +43,12 @@
 import Helmet from 'react-helmet';
 import { lang } from '../../../il8n/lang';
 import { connect } from 'react-redux';
-import { toggleInterstitial, setShortcutPosition, setProjectViewerPosition, setProject } from '../../../Actions/Index';
-import Video from '../../Video/Video';
-import Desc from '../../Desc/Desc';
-//import * as Scroll from 'react-scroll';
-import { Link, DirectLink, Element, Events, animateScroll as scroll } from 'react-scroll';
-import Carousel from 'nuka-carousel';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { setShortcutPosition, setProjectViewerPosition, setProject } from '../../../Actions/Index';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import _ from 'lodash';
 import './Home.css';
 
+import StartMenu from '../../StartMenu/StartMenu';
 import Shortcut from './Shortcut';
 import ProjectViewer from './ProjectViewer';
 
@@ -71,15 +67,35 @@ class Home extends Component {
         clientY: 0
       },
       project: {
-        videos: 'http://s3-us-west-1.amazonaws.com/ejs-portfolio/videos/test.mp4'
-      }
+        videos: 'http://s3-us-west-1.amazonaws.com/ejs-portfolio/videos/test.mp4',
+        color: '#000'
+      },
+      projectOpen: false,
+      startOpen: false
     }
     this.dispatchShortcutPosition = this.dispatchShortcutPosition.bind(this);
     this.dispatchProjectViewerPosition = this.dispatchProjectViewerPosition.bind(this);
     this.dispatchProject = this.dispatchProject.bind(this);
+    this.closeProjectViewer = this.closeProjectViewer.bind(this);
+    this.toggleStartMenu = this.toggleStartMenu.bind(this);
+  }
+  componentWillMount(){
+    if(this.props.params.pid){
+      this.openProjectViewer();
+      this.props.dispatch(setProject(lang.home.projects[this.props.params.pid]));
+    }
   }
   componentDidMount(){
     this.throttledMouseMove = _.throttle(this.throttledMouseMove.bind(this), 50);
+    /*
+    let timer;
+    window.addEventListener('resize', function () {
+      console.log('sdsd');
+      timer = setTimeout(() => {
+        console.log('sdsd');
+      }, 300);
+    });
+    */
   }
   onMouseMove = (e) => {
     e.persist();
@@ -100,17 +116,33 @@ class Home extends Component {
     this.props.dispatch(setProjectViewerPosition(pos));
   }
   dispatchProject(project){
+    //const { shortcuts } = this.props;
+    //this.props.router.push(shortcuts.indexOf(shortcuts.find(x => x.title === project.title)).toString()); // :/ so sloppy
+    this.openProjectViewer();
     this.props.dispatch(setProject(project));
   }
+  closeProjectViewer(){
+    this.setState({
+      projectOpen: false
+    });
+  }
+  openProjectViewer(){
+    this.setState({
+      projectOpen: true
+    });
+  }
+  toggleStartMenu(){
+    const { startOpen } = this.state;
+    this.setState({
+      startOpen: !startOpen
+    });
+  }
   render() {
-    const {shortcuts, projectViewer, project} = this.props;
+    const { shortcuts, projectViewer, project } = this.props;
+    const { projectOpen, startOpen } = this.state;
     return (
       &lt;div className='wrap'>
         &lt;Helmet title={ lang.home.title + lang.helmet.siteTitle } />
-
-
-
-
         &lt;div className='desktop' onMouseMove={this.onMouseMove}>
           {shortcuts.map((shortcut, index) => (
             &lt;Shortcut
@@ -124,97 +156,21 @@ class Home extends Component {
               y={shortcut.position.y}
               key={`shortcut-${index}`} />
           ))}
-
-          &lt;ProjectViewer
-            project={project}
-            dispatchProjectViewerPosition={this.dispatchProjectViewerPosition}
-            mouse={this.state.mouse}
-            w={projectViewer.dim.w}
-            h={projectViewer.dim.h}
-            x={projectViewer.position.x}
-            y={projectViewer.position.y} />
-
-
+          &lt;TransitionGroup>
+            { projectOpen &amp;&amp;
+              &lt;ProjectViewer
+                project={project}
+                closeProjectViewer={this.closeProjectViewer}
+                dispatchProjectViewerPosition={this.dispatchProjectViewerPosition}
+                mouse={this.state.mouse}
+                w={projectViewer.dim.w}
+                h={projectViewer.dim.h}
+                x={projectViewer.position.x}
+                y={projectViewer.position.y} />
+            }
+          &lt;/TransitionGroup>
+          &lt;StartMenu startOpen={startOpen} toggleStartMenu={this.toggleStartMenu} />
         &lt;/div>
-
-
-        {/*
-
-        &lt;Video vid={project.videos}/>
-
-
-        &lt;CSSTransitionGroup
-          transitionName='example'
-          transitionAppear={true}
-          transitionAppearTimeout={500}
-          transitionEnter={false}
-          transitionLeave={false}>
-          &lt;Desc project={project}/>
-        &lt;/CSSTransitionGroup>
-
-
-
-
-
-
-        &lt;div className='site-content'>
-
-
-
-
-
-
-        {lang.home.projects.map((project_list, index) => (
-          &lt;div className='project'>
-            &lt;a style={{backgroundColor: project_list.color}} key={`project-${index}`} onClick={(e) => this.setProject(e, project_list)} className={project_list.videos === project.videos ? 'slidr-active slidr' : 'slidr'}>
-              &lt;h2>{project_list.title}&lt;/h2>
-
-              &lt;video width='400' loop>
-                &lt;source src={project_list.videos} type='video/mp4' />
-              &lt;/video>
-
-            &lt;/a>
-          &lt;/div>
-        ))}
-
-
-
-
-
-
-
-          &lt;Carousel
-            renderBottomCenterControls={false}
-            renderCenterLeftControls={({ previousSlide }) => (
-              &lt;button onClick={previousSlide}>Previous&lt;/button>
-            )}
-            renderCenterRightControls={({ nextSlide }) => (
-              &lt;button onClick={nextSlide}>Next&lt;/button>
-            )}
-            slidesToShow={5}>
-          {lang.home.projects.map((project_list, index) => (
-            &lt;div className='project'>
-              &lt;a style={{backgroundColor: project_list.color}} key={`project-${index}`} onClick={(e) => this.setProject(e, project_list)} className={project_list.videos === project.videos ? 'slidr-active slidr' : 'slidr'}>
-                &lt;h2>{project_list.title}&lt;/h2>
-
-                &lt;video width='400' loop>
-                  &lt;source src={project_list.videos} type='video/mp4' />
-                &lt;/video>
-
-              &lt;/a>
-            &lt;/div>
-          ))}
-          &lt;/Carousel>
-
-
-        &lt;/div>
-
-
-*/}
-
-
-
-
       &lt;/div>
     );
   }
@@ -242,7 +198,7 @@ export default connect(mapStateToProps)(Home);
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 14 2018 07:13:00 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 17 2018 07:57:11 GMT-0700 (Pacific Daylight Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

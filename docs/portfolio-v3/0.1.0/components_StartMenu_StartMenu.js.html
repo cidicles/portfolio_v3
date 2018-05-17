@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>components/StartMenu/StartMenu.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Home.html">Home</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NoMatch.html">NoMatch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Project.html">Project</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProjectViewer.html">ProjectViewer</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Shortcut.html">Shortcut</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="StartMenu.html">StartMenu</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Video.html">Video</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/StartMenu/StartMenu.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component } from 'react';
+import './StartMenu.css';
+
+/**
+ * StartMenu Component
+ * @constructor
+ * @prop {json} project - A project.
+ */
+
+class StartMenu extends Component {
+  render() {
+    const { startOpen, toggleStartMenu } = this.props;
+    return (
+      &lt;div className='start-menu'>
+        &lt;div className='start' onClick={toggleStartMenu}>
+          &lt;svg viewBox='0 0 96.96 75.59'>
+            &lt;path d='M7.4,55.67a1.34,1.34,0,0,1-1-.42L1.89,50.73a1.24,1.24,0,0,1-.39-1,1.34,1.34,0,0,1,.39-.91L38.33,12.42a1.36,1.36,0,0,1,1-.42,1.28,1.28,0,0,1,.94.36l4.51,4.51a1.41,1.41,0,0,1,.39,1,1.31,1.31,0,0,1-.39,1L8.35,55.3A1.28,1.28,0,0,1,7.4,55.67Z' transform='translate(-1.5 -12)'/>
+            &lt;path d='M40.32,66.56a1.71,1.71,0,0,1-.9-.51l-4.51-4.51a1.56,1.56,0,0,1-.48-.88.79.79,0,0,1,.19-.71L59.46,35.1a.81.81,0,0,1,.77-.2,1.6,1.6,0,0,1,.85.45l4.51,4.51a1.8,1.8,0,0,1,.49.88.81.81,0,0,1-.17.8L41.06,66.41A.78.78,0,0,1,40.32,66.56Z' transform='translate(-1.5 -12)'/>
+            &lt;path d='M1.54,49.82a1.34,1.34,0,0,1,.42-1l4.51-4.51a1.24,1.24,0,0,1,1-.39,1.34,1.34,0,0,1,.91.39L44.78,80.74a1.36,1.36,0,0,1,.42,1,1.28,1.28,0,0,1-.36.94l-4.51,4.51a1.41,1.41,0,0,1-1,.39,1.31,1.31,0,0,1-1-.39L1.9,50.76A1.28,1.28,0,0,1,1.54,49.82Z' transform='translate(-1.5 -12)'/>
+            &lt;path d='M92.56,43.92a1.34,1.34,0,0,1,1,.42l4.51,4.51a1.24,1.24,0,0,1,.39,1,1.34,1.34,0,0,1-.39.91L61.64,87.17a1.36,1.36,0,0,1-1,.42,1.28,1.28,0,0,1-.94-.36l-4.51-4.51a1.41,1.41,0,0,1-.39-1,1.31,1.31,0,0,1,.39-1L91.62,44.29A1.28,1.28,0,0,1,92.56,43.92Z' transform='translate(-1.5 -12)'/>
+            &lt;path d='M98.42,49.77a1.34,1.34,0,0,1-.42,1l-4.51,4.51a1.24,1.24,0,0,1-1,.39,1.34,1.34,0,0,1-.91-.39L55.18,18.85a1.36,1.36,0,0,1-.42-1,1.28,1.28,0,0,1,.36-.94l4.51-4.51a1.41,1.41,0,0,1,1-.39,1.31,1.31,0,0,1,1,.39L98.06,48.83A1.28,1.28,0,0,1,98.42,49.77Z' transform='translate(-1.5 -12)'/>
+          &lt;/svg>
+        &lt;/div>
+        &lt;div className={`start-panel ${startOpen ? 'active': ''}`}>
+          I am Eric J Seaton.&lt;br />&lt;br />
+          I make web things. You can find me at any of the places below.
+          &lt;ul>
+            &lt;li>&lt;a rel='noopener noreferrer' href='https://www.linkedin.com/in/eric-seaton-3695718' target='_blank'>Linked In&lt;/a>&lt;/li>
+            &lt;li>&lt;a rel='noopener noreferrer' href='https://github.com/cidicles' target='_blank'>Github&lt;/a>&lt;/li>
+            &lt;li>&lt;a rel='noopener noreferrer' href='https://stackoverflow.com/users/5124641/cidicles' target='_blank'>Stack Overflow&lt;/a>&lt;/li>
+          &lt;/ul>
+        &lt;/div>
+      &lt;/div>
+    );
+  }
+}
+
+export default StartMenu;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 17 2018 07:57:11 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
