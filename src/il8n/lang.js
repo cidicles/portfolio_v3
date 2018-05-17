@@ -38,17 +38,17 @@ export const lang = new LocalizedStrings({
            software:"",
            completedAt: 'Avatar Labs',
            languages:[
-              "react",
+              "react VR",
               "redux",
               "three",
               "CSS 3",
               "HTML 5"
            ],
-           link:"https://seapatrol.pawpatrol.com/ ",
+           link:"https://jumanji360.com/ ",
            longdesc:"",
            images:null,
            videos:`${cdnBase}videos/jumanji.mp4`,
-           color:"#14b0d6",
+           color:"#334129",
            sessions:"",
            role: "Software Developer"
         },
@@ -60,17 +60,13 @@ export const lang = new LocalizedStrings({
            software:"",
            completedAt: 'Avatar Labs',
            languages:[
-              "react",
-              "redux",
-              "webpack",
-              "CSS 3",
-              "HTML 5"
+              "Unity"
            ],
            link:"https://seapatrol.pawpatrol.com/ ",
            longdesc:"",
            images:null,
            videos:`${cdnBase}videos/numnoms.mp4`,
-           color:"#14b0d6",
+           color:"#ff8b99",
            sessions:"",
            role: "Software Developer (Unity C#)"
         },
@@ -84,17 +80,19 @@ export const lang = new LocalizedStrings({
            languages:[
               "react",
               "redux",
+              "TweenMax",
               "webpack",
-              "CSS 3",
-              "HTML 5"
+              "Mongo",
+              "Mongoose",
+              "Express"
            ],
            link:"https://seapatrol.pawpatrol.com/ ",
            longdesc:"",
            images:null,
            videos:`${cdnBase}videos/seapatrol.mp4`,
-           color:"#14b0d6",
+           color:"#213a92",
            sessions:"",
-           role: "Front-End Developer"
+           role: "Front-End Developer, Back-End Developer"
         },
         {
            idprojects:"0",
@@ -114,7 +112,7 @@ export const lang = new LocalizedStrings({
            longdesc:"",
            images:null,
            videos:`${cdnBase}videos/flushforce.mp4`,
-           color:"#14b0d6",
+           color:"#6bbe4f",
            sessions:"",
            role: "Front-End Developer"
         },
@@ -136,7 +134,7 @@ export const lang = new LocalizedStrings({
            longdesc:"",
            images:null,
            videos:`${cdnBase}videos/max.mp4`,
-           color:"#14b0d6",
+           color:"#b1d244",
            sessions:"",
            role: "Front-End Developer"
         },
@@ -159,7 +157,7 @@ export const lang = new LocalizedStrings({
            longdesc:"GSN's emogenious game pits you againts the clock while you try and solve emoji based puzzles. The site was built using react and redux with tweenmax for animations.",
            images:null,
            videos:`${cdnBase}videos/gsn.mp4`,
-           color:"#14b0d6",
+           color:"#2172d7",
            sessions:"791,395",
            role: "Front-End Developer"
         },
@@ -314,7 +312,6 @@ export const lang = new LocalizedStrings({
                "Angular",
                "CSS 3",
                "Foundation",
-               "less",
                "HTML 5",
                "Illustrator",
                "jQuery",

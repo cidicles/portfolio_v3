@@ -1,112 +1,6 @@
 @import '../../../vars'
 
-.wrap
-  //padding: 2rem
-
-.site-content
-  //top: 0
-  //left: 0
-  //bottom: 0
-  //position: fixed
-  //padding: 2rem
-  //position: fixed
-  //z-index: 2
-  //overflow-x: hidden
-  //width: 100vw
-  //overflow-y: visible
-  display: grid
-  grid-template-columns: 25% 25% 25% 25%
-  //display: flex
-  //border-top: 4px solid #fff
-
-.project
-  text-align: center
-  display: flex
-  align-items: center
-  justify-content: center
-  border-right: 1px solid #fff
-  margin: 0
-  display: block
-  color: #fff
-  text-decoration: none
-  border-bottom: 1px solid transparentize(#fff, 0.2)
-  transition: all 0.6s
-  cursor: pointer
-  position: relative
-  transform-origin: center center
-  .slidr
-    //opacity: 0.5
-    position: relative
-    display: block
-    height: 100%
-    //transform: translateX(-80vw)
-    transition: all 0.4s
-    &:hover
-      opacity: 1
-      //transform: translateY(-100px)
-      //transform: scale(1.2)
-      h2
-        opacity: 0
-      video
-        opacity: 1
-    h2
-      transition: all 0.4s
-      //transform: rotateZ(90deg)
-      position: absolute
-      top: 50%
-      left: 50%
-      transform: translate(-50%,-50%)
-      width: 100%
-      transform-origin: 0 0
-      z-index: 1
-      font-size: 2.3rem
-      padding: 0
-      margin: 0
-      line-height: 2.2rem
-      letter-spacing: -0.3rem
-      font-weight: normal
-      font-family: $brand-font
-    video
-      transition: all 0.4s
-      //position: absolute
-      opacity: 0.2
-      top: 0
-      left: 0
-      z-index: 0
-      width: 100%
-
-.slidr-active
-  opacity: 1
-  //transform: translateY(-100px)
-  //margin-top: calc(100vh - 4rem)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Main Desktop
 
 .desktop
   height: 100vh
@@ -114,17 +8,17 @@
   position: relative
   background: #000
 
+// Shortcuts
+
 .shortcut
   width: 64px
   height: 128px
-  //background: #f00
   position: absolute
   top: 0
   left: 0
   cursor: pointer
   user-drag: none
   user-select: none
-  transition: top 0.1s, left 0.1s
   .shortcut-contents
     pointer-events: none
     text-align: center
@@ -132,36 +26,8 @@
     .shortcut-icon
       width: 100%
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Project Viewer
+
 .project-viewer-grid
   display: grid
   grid-template-columns: 1fr 1fr
@@ -172,7 +38,6 @@
   border-radius: 4px
   top: 0
   left: 0
-  //transition: top 0.1s, left 0.1s
   background: #21252b
   border: 1px solid #000
   box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.15)
@@ -202,7 +67,12 @@
 
 .viewer-controls
   padding: 10px
+  cursor: grab
   border-bottom: 1px solid #000
+  background: #21252b
+  transition: background 0.5s
+  &:hover
+    background: darken(#21252b, 3%)
   h2
     display: inline-block
     padding: 0
@@ -210,6 +80,9 @@
     font-family: $brand-font
     font-size: 1.3rem
     font-weight: normal
+    user-select: none
+    pointer-events: none
+    user-drag: none
 
 .btn
   float: right
@@ -220,12 +93,14 @@
   width: 24px
   height: 24px
   box-sizing: border-box
+  transition: background 0.5s
   svg
     width: 100%
     path
+      transition: background 0.5s
       fill: #fff
   &:hover
-    background: #4d78cc
+    background: $brand-color
     svg
       path
         fill: #000
@@ -233,6 +108,8 @@
 .viewer-toolbar
   box-sizing: border-box
   border-right: 1px solid #181a1f
+  user-select: none
+  user-drag: none
   ul
     list-style: none
     margin: 0
@@ -241,15 +118,13 @@
     li
       display: block
       padding: 0 0 0.25rem 0
-      border-bottom: 1px solid #181a1f
+      border-bottom: 1px solid transparentize(#181a1f, 0.7)
       padding: 0.5rem
       img
         max-width: 42px
 
 .tag
   color: #fff
-  //transform-origin: center center
-  //transform: scale(0.7)
   opacity: 0.2
   display: block
   span

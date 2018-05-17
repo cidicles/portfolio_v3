@@ -25,7 +25,6 @@ class Project extends Component {
   render() {
     const {activeVid} = this.props;
     const {project} = this.state;
-    console.log(project)
     return (
       <div className='wrap-project'>
         <Helmet title={ lang.videos.title + lang.helmet.siteTitle } />

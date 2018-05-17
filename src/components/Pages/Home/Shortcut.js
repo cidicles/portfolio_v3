@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {cdnBase} from '../../../const';
 
 /**
  * Shortcut Component
@@ -77,9 +76,9 @@ class Shortcut extends Component {
   }
   render() {
     const style = this.getStyle();
-    const { title, project } = this.props;
+    const { project } = this.props;
     return (
-      <div style={style} className='shortcut' onDoubleClick={this.updateProject.bind(this, project)} onMouseDown={this.startDrag} onMouseUp={this.endDrag}>
+      <div style={style} className='shortcut' onTouchEnd={this.updateProject.bind(this, project)} onDoubleClick={this.updateProject.bind(this, project)} onMouseDown={this.startDrag} onMouseUp={this.endDrag}>
         <div className='shortcut-contents'>
           <img src={project.logo} alt={project.title} className='shortcut-icon' />
           {project.title}

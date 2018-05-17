@@ -1,48 +1,49 @@
 import {lang} from './il8n/lang';
-
-export const siteMapByLocale = {
-  'en_us': 'us',
-  'en_gb': 'gb',
-  'es_mx': 'mx',
-  'it_it': 'it',
-  'nl_nl': 'nl',
-  'pl_pl': 'pl',
-  'de_de': 'de',
-  'cz_cz': 'cz',
-  'fr_fr': 'fr',
-  'en_au': 'au',
-  'hu_hu': 'hu',
-  'sk_sk': 'sk',
-  'ro_ro': 'ro'
-};
-
-export function mapATGLoc() {
-    return siteMapByLocale[lang.getLanguage()] || 'us';
-}
+import _ from 'lodash';
 
 export function truncate(str, len) {
   return str.length > len ? `${str.substring(0,len)}...` : str;
 }
 
-export const loadState = () => {
-  try {
-    const serializedState = localStorage.getItem('state');
-    if(serializedState == null){
-      return undefined;
-    }
-    return JSON.parse(serializedState);
-  } catch(err) {
-    return undefined;
-  }
-};
+export const getShortcuts = () => {
+  let shortcuts = [];
+  let width = 64;
+  let height = 128;
+  let padding = 20;
+  let desktopW = window.innerWidth;
+  let iconsPerRow = (desktopW / 2) / (width + padding);
+  let chunkyShortcuts = _.chunk(lang.home.projects, iconsPerRow);
 
-export const saveState = (state) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
-  } catch (err) {
-    // Ignore write error
+  for (var i = 0; i < chunkyShortcuts.length; i++) {
+    for (var j = 0; j < chunkyShortcuts[i].length; j++) {
+      shortcuts.push({
+        ...chunkyShortcuts[i][j],
+        position: {
+          x: (width + padding) * j + padding,
+          y: (height + padding) * i + padding
+        }
+      });
+    }
   }
+  return shortcuts;
+}
+
+export const getViewerDimentions = () => {
+  let w = (window.innerWidth / 4) * 3;
+  let h = ((w / 16) * 9) + 85;
+  return ({
+    w,
+    h
+  });
+}
+
+export const getInitialPosition = () => {
+  let x = parseInt((window.innerWidth - getViewerDimentions().w) / 2, 10);
+  let y = parseInt((window.innerHeight - getViewerDimentions().h) / 2, 10);
+  return ({
+    x,
+    y
+  });
 }
 
 export const goFetch = (method, url, postData, jwt) => {
