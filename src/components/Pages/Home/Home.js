@@ -46,6 +46,7 @@ class Home extends Component {
   }
   componentDidMount(){
     this.throttledMouseMove = _.throttle(this.throttledMouseMove.bind(this), 50);
+    /*
     let timer;
     window.addEventListener('resize', function () {
       console.log('sdsd');
@@ -53,6 +54,7 @@ class Home extends Component {
         console.log('sdsd');
       }, 300);
     });
+    */
   }
   onMouseMove = (e) => {
     e.persist();
